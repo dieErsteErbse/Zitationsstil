@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0"
+       demote-non-dropping-particle="sort-only" default-locale="de-DE">
+  <info>
+    <title>LNI – Lecture Notes in Informatics (GI)</title>
+    <id>http://www.zotero.org/styles/lni-gi</id>
+    <link href="http://www.zotero.org/styles/lni-gi" rel="self"/>
+    <author>
+      <name>LNI Autorenrichtlinien</name>
+    </author>
+    <category citation-format="label"/>
+    <category field="computer-science"/>
+    <summary>LNI Zitierstil gemaess GI-Autorenrichtlinien. Label [Xy99]: X = 1. Buchstabe Nachname (gross), y = 2. Buchstabe (klein), 99 = Jahr. Bei mehr als 3 Autoren: nur Erstautor. Mehrere Werke selbes Jahr: [Xy99a/b]. Ohne Autor: erste zwei Titelbuchstaben.</summary>
+    <updated>2026-04-09T00:00:00+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+
+  <locale xml:lang="de">
+    <terms>
+      <term name="anonymous" form="short">o.&#160;V.</term>
+      <term name="no date" form="short">o.&#160;J.</term>
+      <term name="et-al">et&#160;al.</term>
+      <term name="editor" form="short">Hrsg.</term>
+      <term name="edition" form="short">Aufl.</term>
+      <term name="volume" form="short">Bd.</term>
+      <term name="page" form="short">S.</term>
+      <term name="retrieved">abgerufen am</term>
+    </terms>
+  </locale>
+
+  <!-- ==================== MACROS ==================== -->
+
+  <macro name="author-bib">
+    <names variable="author" delimiter=" ; ">
+      <name name-as-sort-order="all" sort-separator=", " delimiter=" ; "
+            delimiter-precedes-last="always"/>
+      <label form="short" prefix=" (" suffix=")"/>
+    </names>
+  </macro>
+
+  <macro name="editor-bib">
+    <names variable="editor" delimiter=" ; ">
+      <name name-as-sort-order="all" sort-separator=", " delimiter=" ; "
+            delimiter-precedes-last="always"/>
+      <label form="short" prefix=" (" suffix=")"/>
+    </names>
+  </macro>
+
+  <macro name="title">
+    <choose>
+      <if type="book report motion_picture" match="any">
+        <text variable="title" font-style="italic"/>
+      </if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="year-issued">
+    <date variable="issued" form="numeric" date-parts="year"/>
+  </macro>
+
+  <macro name="access">
+    <group delimiter=" ">
+      <text term="retrieved"/>
+      <date variable="accessed">
+        <date-part name="day" form="numeric-leading-zeros" suffix="."/>
+        <date-part name="month" form="numeric-leading-zeros" suffix="."/>
+        <date-part name="year" form="long"/>
+      </date>
+    </group>
+  </macro>
+
+  <macro name="pages">
+    <group>
+      <label variable="page" form="short" suffix="&#160;"/>
+      <text variable="page"/>
+    </group>
+  </macro>
+
+  <macro name="edition">
+    <choose>
+      <if is-numeric="edition">
+        <group>
+          <number variable="edition" form="ordinal"/>
+          <text term="edition" form="short" prefix=" "/>
+        </group>
+      </if>
+      <else>
+        <text variable="edition"/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- ==================== CITATION ==================== -->
+  <!--
+    et-al-min="4"       Bei 4+ Autoren: et-al anwenden
+    et-al-use-first="1" Nur die erstgenannte Autorin verwenden
+    year-suffix         [Xy99a], [Xy99b] bei Namensgleichheit im selben Jahr
+  -->
+  <citation
+    et-al-min="4"
+    et-al-use-first="1"
+    disambiguate-add-year-suffix="true"
+    disambiguate-add-names="false"
+    disambiguate-add-givenname="false">
+    <sort>
+      <key variable="citation-label"/>
+    </sort>
+    <layout prefix="[" suffix="]" delimiter="; ">
+      <text variable="citation-label"/>
+    </layout>
+  </citation>
+
+  <!-- ==================== BIBLIOGRAPHY ==================== -->
+  <bibliography et-al-min="9" et-al-use-first="8" second-field-align="flush">
+    <sort>
+      <key variable="citation-label"/>
+    </sort>
+    <layout>
+      <text variable="citation-label" prefix="[" suffix="]&#160;"/>
+
+      <choose>
+        <if variable="author">
+          <text macro="author-bib" suffix=":"/>
+        </if>
+        <else-if variable="editor">
+          <text macro="editor-bib" suffix=":"/>
+        </else-if>
+      </choose>
+
+      <choose>
+
+        <!-- Monographie / Buch -->
+        <if type="book" match="any">
+          <text macro="title" prefix=" "/>
+          <text macro="edition" prefix=". "/>
+          <text variable="publisher-place" prefix=". "/>
+          <text variable="publisher" prefix="&#160;: "/>
+          <text macro="year-issued" prefix=", "/>
+        </if>
+
+        <!-- Buchbeitrag / Konferenzbeitrag -->
+        <else-if type="chapter paper-conference" match="any">
+          <text macro="title" prefix=" " suffix="."/>
+          <text term="in" text-case="capitalize-first" prefix=" " suffix=": "/>
+          <choose>
+            <if variable="editor">
+              <text macro="editor-bib" suffix=": "/>
+            </if>
+          </choose>
+          <text variable="container-title" font-style="italic"/>
+          <text macro="pages" prefix=", "/>
+          <text variable="publisher-place" prefix=". "/>
+          <text variable="publisher" prefix="&#160;: "/>
+          <text macro="year-issued" prefix=", "/>
+        </else-if>
+
+        <!-- Zeitschriften- / Magazinartikel -->
+        <else-if type="article article-journal article-magazine" match="any">
+          <text macro="title" prefix=" "/>
+          <text variable="container-title" prefix=". In: " font-style="italic"/>
+          <text variable="volume" prefix=",&#160;Jg.&#160;"/>
+          <text macro="year-issued" prefix=" (" suffix=")"/>
+          <text variable="issue" prefix="&#160;H.&#160;"/>
+          <text macro="pages" prefix=", "/>
+        </else-if>
+
+        <!-- Zeitungsartikel -->
+        <else-if type="article-newspaper" match="any">
+          <text macro="title" prefix=" "/>
+          <text variable="container-title" prefix=". In: " font-style="italic"/>
+          <date variable="issued" prefix=",&#160;" form="numeric"/>
+          <text macro="pages" prefix=", "/>
+        </else-if>
+
+        <!-- Hochschulschrift -->
+        <else-if type="thesis" match="any">
+          <text variable="title" prefix=" " font-style="italic"/>
+          <text variable="genre" prefix=". "/>
+          <text variable="publisher" prefix=",&#160;"/>
+          <text macro="year-issued" prefix=",&#160;"/>
+        </else-if>
+
+        <!-- Technischer Bericht -->
+        <else-if type="report" match="any">
+          <text variable="title" prefix=" " font-style="italic"/>
+          <text variable="genre" prefix=". "/>
+          <text variable="number" prefix="&#160;Nr.&#160;"/>
+          <text variable="publisher-place" prefix=". "/>
+          <text variable="publisher" prefix="&#160;: "/>
+          <text macro="year-issued" prefix=",&#160;"/>
+        </else-if>
+
+        <!-- Webseite / Blog -->
+        <else-if type="webpage post post-weblog" match="any">
+          <text variable="title" prefix=" " font-style="italic" suffix="."/>
+          <text variable="URL" prefix=" URL:&#160;"/>
+          <text macro="access" prefix=",&#160;"/>
+        </else-if>
+
+        <!-- Gesetz / Norm -->
+        <else-if type="bill legislation" match="any">
+          <group prefix=" " delimiter="&#160;&#8212;&#160;">
+            <text variable="title-short"/>
+            <text variable="title"/>
+          </group>
+          <date variable="issued" prefix="&#160;v.&#160;" form="numeric"/>
+        </else-if>
+
+        <!-- Auffangtatbestand -->
+        <else>
+          <text macro="title" prefix=" "/>
+          <text variable="publisher-place" prefix=". "/>
+          <text variable="publisher" prefix="&#160;: "/>
+          <text macro="year-issued" prefix=",&#160;"/>
+        </else>
+
+      </choose>
+    </layout>
+  </bibliography>
+
+</style>
