@@ -9,7 +9,7 @@
       <name>LNI Autorenrichtlinien</name>
     </author>
     <category citation-format="label"/>
-    <category field="computer-science"/>
+    <category field="engineering"/>
     <summary>LNI Zitierstil gemaess GI-Autorenrichtlinien. Label [Xy99]: X = 1. Buchstabe Nachname (gross), y = 2. Buchstabe (klein), 99 = Jahr. Bei mehr als 3 Autoren: nur Erstautor. Mehrere Werke selbes Jahr: [Xy99a/b]. Ohne Autor: erste zwei Titelbuchstaben.</summary>
     <updated>2026-04-09T00:00:00+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
